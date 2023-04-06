@@ -10,7 +10,7 @@ namespace MDIForms
         {
             var services = new ServiceCollection();
             services.AddScoped<FormMain>();
-            services.AddSingleton<FormChild>();
+            services.AddScoped<FormChild>();
             services.AddTransient<FormGrandchild>();
 
             ServiceProvider = services.BuildServiceProvider();

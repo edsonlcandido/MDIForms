@@ -5,7 +5,8 @@ namespace MDIForms
     public partial class FormMain : Form
     {
         private MdiClient _mdiClient;
-        internal MdiClient MdiClient { 
+        internal MdiClient MdiClient
+        {
             get
             {
                 foreach (Control ctl in this.Controls)
@@ -18,7 +19,7 @@ namespace MDIForms
                     _mdiClient = null;
                 }
                 return _mdiClient;
-            } 
+            }
         }
         public FormMain()
         {
@@ -56,7 +57,7 @@ namespace MDIForms
         public void ShowFormInMdiContainer(Form form)
         {
             var serviceProvider = Program.ServiceProvider;
-            
+
             foreach (Form mdiChild in this.MdiChildren)
             {
                 //if (mdiChild.GetType() == form.GetType())
@@ -64,7 +65,7 @@ namespace MDIForms
                 //    // Se o formulário é singleton ou scoped, oculta o formulário em vez de fechá-lo
                 //    if (serviceLifetime == ServiceLifetime.Singleton || serviceLifetime == ServiceLifetime.Scoped)
                 //    {
-                        mdiChild.Hide();
+                mdiChild.Hide();
                 //    }
                 //    else // Se o formulário é transient, fecha o formulário
                 //    {
@@ -77,7 +78,6 @@ namespace MDIForms
             form.Show();
             form.Size = new Size(this.MdiClient.Width - 4, this.MdiClient.Height - 4);
             form.Location = new Point(0, 0);
-
         }
     }
 }

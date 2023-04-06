@@ -59,7 +59,6 @@
             ClientSize = new Size(764, 503);
             Controls.Add(flowLayoutPanel1);
             IsMdiContainer = true;
-            MdiChildrenMinimizedAnchorBottom = false;
             Name = "FormMain";
             Text = "Form1";
             Load += FormMain_Load;
