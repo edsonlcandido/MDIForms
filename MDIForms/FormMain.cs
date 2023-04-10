@@ -58,21 +58,26 @@ namespace MDIForms
         {
             var serviceProvider = Program.ServiceProvider;
 
+           
+
+
             foreach (Form mdiChild in this.MdiChildren)
             {
-                //if (mdiChild.GetType() == form.GetType())
-                //{
+                if (mdiChild.GetType() == form.GetType())
+                {
                 //    // Se o formulário é singleton ou scoped, oculta o formulário em vez de fechá-lo
                 //    if (serviceLifetime == ServiceLifetime.Singleton || serviceLifetime == ServiceLifetime.Scoped)
                 //    {
-                mdiChild.Hide();
+
+                    
+                    mdiChild.Close();
                 //    }
                 //    else // Se o formulário é transient, fecha o formulário
                 //    {
                 //        mdiChild.Close();
                 //    }
                 //    break;
-                //}
+                }
             }
             form.MdiParent = this;
             form.Show();

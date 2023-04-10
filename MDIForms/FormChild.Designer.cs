@@ -65,6 +65,7 @@
             ShowInTaskbar = false;
             SizeGripStyle = SizeGripStyle.Hide;
             Text = "Child";
+            FormClosing += FormChild_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }

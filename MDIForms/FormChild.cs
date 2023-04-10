@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace MDIForms
 {
@@ -32,6 +33,15 @@ namespace MDIForms
             //formGrandchild.Size = new Size(formMain.MdiClient.Width - 4, formMain.MdiClient.Height - 4);
             //this.Close();   
             //formGrandchild.Location = new Point(0, 0);
+        }
+
+        private void FormChild_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                this.Hide(); 
+                e.Cancel = true;
+            }
         }
     }
 }
