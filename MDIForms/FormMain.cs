@@ -56,33 +56,50 @@ namespace MDIForms
 
         public void ShowFormInMdiContainer(Form form)
         {
-            var serviceProvider = Program.ServiceProvider;
-
-           
-
-
+            var serviceProvider = Program.Services;
             foreach (Form mdiChild in this.MdiChildren)
             {
                 if (mdiChild.GetType() == form.GetType())
                 {
-                //    // Se o formulário é singleton ou scoped, oculta o formulário em vez de fechá-lo
-                //    if (serviceLifetime == ServiceLifetime.Singleton || serviceLifetime == ServiceLifetime.Scoped)
-                //    {
-
-                    
-                    mdiChild.Close();
-                //    }
-                //    else // Se o formulário é transient, fecha o formulário
-                //    {
-                //        mdiChild.Close();
-                //    }
-                //    break;
+                    Type serviceType = mdiChild.GetType();
+                    var serviceDescriptor = Program.Services.FirstOrDefault(descriptor => descriptor.ServiceType == serviceType);
+                    if (serviceDescriptor != null)
+                    {
+                        var serviceLifetime = serviceDescriptor.Lifetime;
+                        // Se o formulÃ¡rio Ã© singleton ou scoped, oculta o formulÃ¡rio em vez de fechÃ¡-lo
+                        if (serviceLifetime == ServiceLifetime.Singleton || serviceLifetime == ServiceLifetime.Scoped)
+                        {
+                            mdiChild.Hide();
+                        }
+                        else // Se o formulÃ¡rio Ã© transient, fecha o formulÃ¡rio
+                        {
+                            mdiChild.Close();
+                        }
+                    }
                 }
             }
-            form.MdiParent = this;
-            form.Show();
-            form.Size = new Size(this.MdiClient.Width - 4, this.MdiClient.Height - 4);
-            form.Location = new Point(0, 0);
+            
+            //verify if mdiChildren contain a instance type of form LINQ query
+            var formChild = this.MdiChildren.FirstOrDefault(f => f.GetType() == form.GetType());
+            
+            if (formChild != null)
+            {
+                // Code to execute if the form is in this.MdiChildren
+                form = formChild;
+                form.MdiParent = this;
+                form.BringToFront();
+                form.Show();
+                form.Size = new Size(this.MdiClient.Width - 4, this.MdiClient.Height - 4);
+                form.Location = new Point(0, 0);
+            }
+            else
+            {
+                // Code to execute if the form is not in this.MdiChildren
+                form.MdiParent = this;
+                form.Show();
+                form.Size = new Size(this.MdiClient.Width - 4, this.MdiClient.Height - 4);
+                form.Location = new Point(0, 0);            
+            }
         }
     }
 }
